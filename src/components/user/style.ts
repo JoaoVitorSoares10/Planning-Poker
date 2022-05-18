@@ -6,11 +6,18 @@ export const Container = Styled.div`
 
     transition: all 0.5s;
 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
     p{ 
         font-size: 1rem;
         font-weight: 600;
 
         margin-top: 0.3rem;
+
+        color: #777;
     }
 `;
 

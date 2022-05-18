@@ -6,8 +6,6 @@ export const Container = Styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-
-    background: #1997ff;
 `;
 
 export const Content = Styled.main`
@@ -22,6 +20,10 @@ export const Content = Styled.main`
     flex-direction: column;
     align-items: center;
     justify-content: center;
+
+    h1 {
+        color: #5EBDF9;
+    }
 
     div {
         position: relative;
@@ -51,10 +53,8 @@ export const Content = Styled.main`
         width: 100%;
         padding: 1rem 3rem;
 
-        border: none;
+        border: 1px solid #ddd;
         border-radius: 30px;
-
-        box-shadow: 1px 1px 30px #b7deff;
 
         &::placeholder {
             color: #004e8f;
@@ -69,7 +69,7 @@ export const Content = Styled.main`
         font-size: 0.9rem;
         font-weight: 600;
 
-        background: #1997ff;
+        background: #5EBDF9;
         color: #fff;
 
         border: none;

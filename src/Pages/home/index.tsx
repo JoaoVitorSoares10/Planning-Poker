@@ -23,12 +23,6 @@ export function Home() {
             <User name="Jederson" />
             <User name="Josué" />
             <User name="Elaine" />
-            <User name="João" />
-            <User name="Juan" />
-            <User name="Rinaldo" />
-            <User name="Jederson" />
-            <User name="Josué" />
-            <User name="Elaine" />
           </Players>
         </div>
       </Content>
