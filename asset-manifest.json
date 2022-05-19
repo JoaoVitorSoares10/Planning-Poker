@@ -1,12 +1,11 @@
 {
   "files": {
-    "main.js": "/JoaoVitorSoares10/Planning-Poker/static/js/main.2af0fb8b.js",
-    "static/media/InputIcon.svg": "/JoaoVitorSoares10/Planning-Poker/static/media/InputIcon.d7541c787617fadc61b216152949f0ec.svg",
+    "main.js": "/JoaoVitorSoares10/Planning-Poker/static/js/main.922e9d52.js",
     "static/media/players.svg": "/JoaoVitorSoares10/Planning-Poker/static/media/players.9f8cfef91f90827533f3e6af416b9861.svg",
     "index.html": "/JoaoVitorSoares10/Planning-Poker/index.html",
-    "main.2af0fb8b.js.map": "/JoaoVitorSoares10/Planning-Poker/static/js/main.2af0fb8b.js.map"
+    "main.922e9d52.js.map": "/JoaoVitorSoares10/Planning-Poker/static/js/main.922e9d52.js.map"
   },
   "entrypoints": [
-    "static/js/main.2af0fb8b.js"
+    "static/js/main.922e9d52.js"
   ]
 }
