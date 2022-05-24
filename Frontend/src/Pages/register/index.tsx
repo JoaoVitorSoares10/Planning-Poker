@@ -1,29 +1,15 @@
 import {Container, Content, StyledLink} from './styles';
-import InputIconImg from '../../assets/InputIcon.svg'
-import { useState } from 'react';
 
 interface Registerprops {
-  socket: {
-    emit: (eventName: string, data:{
-      username: string,
-      room: string,
-    }) => void;
-  },
   username: string,
   onSetUsername: (event: string) => void,
   room: string
   onSetRoom: (event: string) => void
 }
 
-export function Register({socket, username, onSetUsername, room, onSetRoom}:Registerprops) {
+export function Register({username, onSetUsername, room, onSetRoom}:Registerprops) {
   const joinRoom = () =>{
-    if(username !== "" && room !== ""){
-      const userInfo = {
-        username: username,
-        room: room,
-      }
-      socket.emit("joinRoom", userInfo);
-    }
+    
   }
 
   return (
