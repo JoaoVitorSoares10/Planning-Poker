@@ -24,7 +24,7 @@ io.on("connection", (socket) => {
             author: data.username,
             selectedCard: "",
         }
-
+        
         socket.to(data.room).emit("newUser", userInfo);
     })
 

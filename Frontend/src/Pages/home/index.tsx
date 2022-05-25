@@ -1,41 +1,39 @@
 import { useEffect, useState } from "react";
+
 import { Cards, Container, Content, Header, Players, Status, CardsTitle, Deck } from "./styles";
 
-//import PlayerImg from '../../assets/players.svg';
+import PlayerImg from '../../assets/players.svg';
 
 import { User } from "../../components/user";
 import { Card } from "../../components/Card";
 import { Navigate, useNavigate } from "react-router-dom";
-import { createClient } from '@supabase/supabase-js';
-
-const SUPABASE_ANON_KEY  = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFrdXZlcnN4bGF4eGVhcXNzYnlhIiwicm9sZSI6ImFub24iLCJpYXQiOjE2NTMwOTQ2NDMsImV4cCI6MTk2ODY3MDY0M30.luZte9HMZk7zyy9jADd-5lz9ewUKznkE_buWoQOekIM';
-const SUPABASE_URL = 'https://qkuversxlaxxeaqssbya.supabase.co';
-
-const supabaseClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
 interface Registerprops {
+  socket: {
+    emit: (eventName: string, selectInfo:{
+      room: string,
+      author: string,
+      selectCardNumber: string,
+    }) => void,
+    on: (eventName: string, data: (data: {
+      id?: string,
+      room: string, 
+      author: string,
+      selectCardNumber: string
+    }) => void) => void
+  },
   username: string, 
   room: string
 }
 
 interface loggedUsersType {
+  id?: string;
+  room: string, 
   author: string,
-  created_at: string,
-  id: number,
-  room: string
-  selected_card: string
+  selectCardNumber: string
 }
 
-const getUsersLogged = () =>{
-  return supabaseClient
-  .from('users')
-  .on('INSERT', ({newUser})=>{
-    console.log("New user");
-  })
-  .subscribe();
-}
-
-export function Home({username, room}:Registerprops) {
+export function Home({socket, username, room}:Registerprops) {
   const [loggedUsers, setLoggedUsers] = useState<loggedUsersType[]>([]);
   let navigate = useNavigate();
   
@@ -46,29 +44,45 @@ export function Home({username, room}:Registerprops) {
   })
 
   useEffect(() => {
-    supabaseClient
-      .from<loggedUsersType>('users')
-      .select('*')
-      .then(({ data })=>{
-        setLoggedUsers(data as any) ;
-      })
+    console.log(loggedUsers)
+  }, [loggedUsers])
 
-      
-  }, [])
+  useEffect(() => {
+    socket.on("newUser", (data)=>{
+      /* let isFind = false;
+      loggedUsers.forEach((item)=>{
+        if(item.id === data.id){
+          isFind = true;
+        }
+      })
+      if(!isFind){
+        setLoggedUsers([
+          ...loggedUsers,
+          data
+        ]);
+        console.log(data)
+      } */
+      setLoggedUsers((loggedUsers)=>[...loggedUsers,data]);
+    });
+  }, [socket])
+
+  /* useEffect(() => {
+    socket.on("ShowCards", (data)=>{
+      setLoggedUsers([
+        ...loggedUsers,
+        data
+    ]);
+    });
+  }, [socket]) */
 
   const handleSelectCard = async (card:string)=>{
     const selectInfo = {
-      author: username,
       room: room,
-      selected_card: card
+      author: username,
+      selectCardNumber: card,
     }
 
-    supabaseClient
-      .from('users')
-      .insert([selectInfo])
-      .then((res)=>{
-        console.log(res);
-      })
+    await socket.emit("registerSelectCard", selectInfo);
   }
 
   return (
@@ -77,7 +91,7 @@ export function Home({username, room}:Registerprops) {
         <h1>Plannig Poker</h1>
         <p>{username}</p>
         <p>/{room}</p>
-        {/* <button><img src={PlayerImg} alt="" /> Convidar jogadores</button> */}
+        <button><img src={PlayerImg} alt="" /> Convidar jogadores</button>
       </Header>
       <Content>
         <div>
@@ -86,7 +100,7 @@ export function Home({username, room}:Registerprops) {
           </Status>
           <Players>
             {loggedUsers.map((item)=>(
-              <User key={item.id} name={item.author} selectedCard={item.selected_card}/>
+              <User name={item.author} selectedCard={item.selectCardNumber}/>
             ))} 
           </Players>
         </div>
